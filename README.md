@@ -112,6 +112,59 @@ requirements.txt
 MILESTONES.md
 ```
 
+## Daily Automation
+
+Run the complete workflow (fetch → filter → email) in one command:
+
+```bash
+# Run daily automation (fetches new listings, filters, exports, emails)
+python daily_run.py
+```
+
+### Setup Gmail API (One-time)
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a project → Enable Gmail API
+3. Create OAuth 2.0 credentials (Desktop app)
+4. Download `client_secret.json` and place in project directory
+5. Add `c2501038@gmail.com` as a test user
+6. Run once to authenticate:
+   ```bash
+   python send_email.py
+   ```
+   - Sign in with c2501038@gmail.com when browser opens
+   - Click "Continue" to authorize
+   - Token saved to `token.json` for future runs
+
+### Schedule Daily Runs (Linux/Mac)
+
+Add to crontab to run daily at 9 AM:
+
+```bash
+# Open crontab editor
+crontab -e
+
+# Add this line:
+0 9 * * * cd /path/to/businesssearcher && python daily_run.py >> daily_run.log 2>&1
+```
+
+### Windows Task Scheduler
+
+1. Open Task Scheduler → Create Basic Task
+2. Name: "Business Searcher Daily"
+3. Trigger: Daily at 9:00 AM
+4. Action: Start a program
+5. Program: `python` (or full path to python.exe)
+6. Arguments: `daily_run.py`
+7. Start in: `C:\path\to\businesssearcher`
+
+## Email Results Manually
+
+```bash
+# Send current filtered results via email
+python send_email.py
+```
+
 ## Database Query (Direct)
 
 ```bash
