@@ -49,3 +49,5 @@ prefilter_pass_listings.csv
 # Environment variables
 .env
 .env.local
+token.json
+client_secret.json
